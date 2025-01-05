@@ -19,6 +19,21 @@ export const fetchWeatherByCity = async (city: string) => {
   }
 };
 
+export const fetchWeatherByCityId = async (id: number) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/weather`, {
+      params: {
+        id,
+        appid: API_KEY,
+        units: 'metric',
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.message || 'City not found');
+  }
+};
+
 export const fetchWeatherByCoords = async (lat: number, lon: number) => {
   try {
     const response = await axios.get(`${BASE_URL}/weather`, {

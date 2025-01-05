@@ -10,15 +10,18 @@ interface WeatherCardProps {
 
 const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 text-center">
-      <h2 className="text-2xl font-semibold mb-2">{weather.name}</h2>
-      <p className="text-xl mb-2">{weather.main.temp}°C</p>
-      <p className="text-gray-600 capitalize">{weather.weather[0].description}</p>
-      <img
-        className="mx-auto mt-2"
-        src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-        alt={weather.weather[0].description}
-      />
+    <div className="relative flex flex-col items-center mb-8 text-center">
+      <div className="w-full h-64 sm:h-48 md:h-72 lg:h-96 relative">
+        <img
+          className="w-full h-full object-contain"
+          src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`}
+          alt={weather.weather[0].description}
+        />
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <p className="text-xl md:text-lg sm:text-base text-gray-800">{weather.name}</p>
+          <h2 className="text-6xl text-gray-800">{Math.round(weather.main.temp)}°</h2>
+        </div>
+      </div>
     </div>
   );
 };

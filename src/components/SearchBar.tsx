@@ -38,15 +38,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-full sm:w-64">
       <input
         type="text"
         value={query}
         onChange={(e) => handleInputChange(e.target.value)}
-        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500"
         placeholder="Search city..."
       />
-      <ul className="absolute left-0 right-0 bg-white shadow-md mt-1 rounded z-10">
+      <ul className="absolute left-0 right-0 bg-white shadow-md mt-1 z-10">
         {suggestions.map((suggestion, index) => (
           <li
             key={index}

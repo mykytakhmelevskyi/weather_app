@@ -3,11 +3,9 @@ import SearchBar from './SearchBar';
 
 const Header: React.FC<{ onSearch: (city: string) => void }> = ({ onSearch }) => {
   return (
-    <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
-      <h1 className="text-xl font-bold">Weather App</h1>
-      <div className="w-1/2">
-        <SearchBar onSearch={onSearch} />
-      </div>
+    <header className="w-full flex flex-wrap items-center justify-between mb-6 space-y-4 sm:space-y-0">
+      <h1 className="text-xl">Weather App</h1>
+      <SearchBar onSearch={onSearch} />
     </header>
   );
 };

@@ -31,12 +31,10 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-400 flex flex-col items-center p-4">
       <Header onSearch={handleSearch} />
-      <main className="p-4">
-        {currentWeather && <WeatherCard weather={currentWeather} />}
-        <RecentSearches cities={recentCities} onCityClick={handleSearch} />
-      </main>
+      {currentWeather && <WeatherCard weather={currentWeather} />}
+      <RecentSearches cities={recentCities} onCityClick={handleSearch} />
     </div>
   );
 };
