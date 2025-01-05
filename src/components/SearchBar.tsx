@@ -32,7 +32,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   const handleSearch = (city: string) => {
-    setQuery(city);
+    setQuery('');
     setSuggestions([]);
     onSearch(city);
   };

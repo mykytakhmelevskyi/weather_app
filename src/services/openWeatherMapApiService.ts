@@ -1,31 +1,29 @@
 import axios from 'axios';
+import { config } from '../config';
+import { WeatherData, CityGeoResponse } from '../types/weather';
 
-const API_KEY = process.env.OPENWEATHERMAP_API_KEY;
-const BASE_URL = 'https://api.openweathermap.org/data/2.5';
-const GEO_URL = 'http://api.openweathermap.org/geo/1.0/direct';
-
-export const fetchWeatherByCity = async (city: string) => {
+export const fetchWeatherByCity = async (city: string): Promise<WeatherData> => {
   try {
-    const response = await axios.get(`${BASE_URL}/weather`, {
+    const response = await axios.get<WeatherData>(`${config.WEATHER_API.BASE_URL}/weather`, {
       params: {
         q: city,
-        appid: API_KEY,
-        units: 'metric',
+        appid: config.WEATHER_API.KEY,
+        units: config.WEATHER_API.UNITS,
       },
     });
     return response.data;
-  } catch (error: any) {
+  } catch (error) {
     throw new Error('City not found');
   }
 };
 
 export const fetchWeatherByCityId = async (id: number) => {
   try {
-    const response = await axios.get(`${BASE_URL}/weather`, {
+    const response = await axios.get(`${config.WEATHER_API.BASE_URL}/weather`, {
       params: {
         id,
-        appid: API_KEY,
-        units: 'metric',
+        appid: config.WEATHER_API.KEY,
+        units: config.WEATHER_API.UNITS,
       },
     });
     return response.data;
@@ -36,12 +34,12 @@ export const fetchWeatherByCityId = async (id: number) => {
 
 export const fetchWeatherByCoords = async (lat: number, lon: number) => {
   try {
-    const response = await axios.get(`${BASE_URL}/weather`, {
+    const response = await axios.get(`${config.WEATHER_API.BASE_URL}/weather`, {
       params: {
         lat,
         lon,
-        appid: API_KEY,
-        units: 'metric',
+        appid: config.WEATHER_API.KEY,
+        units: config.WEATHER_API.UNITS,
       },
     });
     return response.data;
@@ -50,17 +48,17 @@ export const fetchWeatherByCoords = async (lat: number, lon: number) => {
   }
 };
 
-export const fetchCitySuggestions = async (query: string) => {
+export const fetchCitySuggestions = async (query: string): Promise<CityGeoResponse[]> => {
   try {
-    const response = await axios.get(GEO_URL, {
+    const response = await axios.get(config.WEATHER_API.GEO_URL, {
       params: {
         q: query,
         limit: 5,
-        appid: API_KEY,
+        appid: config.WEATHER_API.KEY,
       },
     });
     return response.data;
-  } catch (error: any) {
+  } catch (error) {
     throw new Error('Error fetching city suggestions');
   }
 };

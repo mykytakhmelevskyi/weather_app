@@ -7,12 +7,16 @@ interface RecentSearchesProps {
 
 const RecentSearches: React.FC<RecentSearchesProps> = ({ cities, onCityClick }) => {
   return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      {/* <h2 className="text-lg mb-2">Recent Searches</h2> */}
+    <section className="w-full">
+      <div className="flex justify-start mb-4">
+        <h2 className="text-lg font-semibold text-gray-700">Recent Searches</h2>
+      </div>
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {cities.map((city, index) => (
           <div
             key={index}
-            className="bg-white shadow p-4 flex flex-col items-center text-center hover:bg-gray-50 cursor-pointer"
+            className="bg-white shadow p-4 flex flex-col items-center text-center hover:bg-gray-100 cursor-pointer rounded-sm transition-colors duration-200"
             onClick={() => onCityClick(city.name)}
           >
             <div className="flex justify-between items-center w-full">
@@ -30,7 +34,8 @@ const RecentSearches: React.FC<RecentSearchesProps> = ({ cities, onCityClick }) 
             </div>
           </div>
         ))}
-    </div>
+      </div>
+    </section>
   );
 };
 
