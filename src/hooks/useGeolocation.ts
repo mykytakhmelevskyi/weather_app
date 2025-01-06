@@ -20,12 +20,20 @@ export const useGeolocation = () => {
     }
 
     try {
-      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+      // Create a timeout promise
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error('Timeout')), 5000);
+      });
+
+      // Create geolocation promise
+      const geolocationPromise = new Promise<GeolocationPosition>((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject, {
-          timeout: 5000,
           enableHighAccuracy: false
         });
       });
+
+      // Race between timeout and geolocation
+      const position = await Promise.race([geolocationPromise, timeoutPromise]);
 
       setState({
         coords: position.coords,

@@ -16,7 +16,7 @@ export const config: Config = {
   WEATHER_API: {
     KEY: process.env.OPENWEATHERMAP_API_KEY || '',
     BASE_URL: 'https://api.openweathermap.org/data/2.5',
-    GEO_URL: 'http://api.openweathermap.org/geo/1.0/direct',
+    GEO_URL: 'https://api.openweathermap.org/geo/1.0/direct',
     UNITS: 'metric',
   },
   CACHE: {
