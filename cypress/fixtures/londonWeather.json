@@ -1,0 +1,12 @@
+{
+  "name": "London",
+  "main": {
+    "temp": 18.4
+  },
+  "weather": [
+    {
+      "icon": "01d",
+      "description": "clear sky"
+    }
+  ]
+}

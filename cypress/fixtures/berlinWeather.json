@@ -1,0 +1,12 @@
+{
+  "name": "Berlin",
+  "main": {
+    "temp": 15.2
+  },
+  "weather": [
+    {
+      "icon": "04d",
+      "description": "broken clouds"
+    }
+  ]
+} 

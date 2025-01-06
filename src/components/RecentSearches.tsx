@@ -16,6 +16,7 @@ const RecentSearches: React.FC<RecentSearchesProps> = ({ cities, onCityClick }) 
         {cities.map((city, index) => (
           <div
             key={index}
+            data-testid="recent-city"
             className="bg-white shadow p-4 flex flex-col items-center text-center hover:bg-gray-100 cursor-pointer rounded-sm transition-colors duration-200"
             onClick={() => onCityClick(city.name)}
           >

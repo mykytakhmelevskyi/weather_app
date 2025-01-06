@@ -1,0 +1,16 @@
+[
+  {
+    "name": "London",
+    "state": "",
+    "country": "GB",
+    "lat": 51.5074,
+    "lon": -0.1278
+  },
+  {
+    "name": "London",
+    "state": "Ontario",
+    "country": "CA",
+    "lat": 42.9834,
+    "lon": -81.233
+  }
+]

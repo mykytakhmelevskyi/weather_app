@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Berlin",
+    "state": "",
+    "country": "DE",
+    "lat": 52.5244,
+    "lon": 13.4105
+  },
+  {
+    "name": "Berlin",
+    "state": "New Hampshire",
+    "country": "US",
+    "lat": 44.4687,
+    "lon": -71.1851
+  }
+] 

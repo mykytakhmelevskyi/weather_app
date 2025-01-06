@@ -1,0 +1,12 @@
+{
+  "name": "Tokyo",
+  "main": {
+    "temp": 25.6
+  },
+  "weather": [
+    {
+      "icon": "03d",
+      "description": "scattered clouds"
+    }
+  ]
+} 
