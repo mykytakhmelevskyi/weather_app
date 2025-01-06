@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { WeatherData, CityCache } from '../types/weather';
-import { fetchWeatherByCity, fetchWeatherByCoords } from '../services/openWeatherMapApiService';
+import { weatherService } from '../services/openWeatherMapApiService';
 import { cacheService } from '../services/cacheService';
 import { config } from '../config';
 import { useGeolocation } from './useGeolocation';
@@ -27,7 +27,7 @@ export const useWeather = () => {
       // Try to get weather by location
       const coords = await geolocation.getLocation();
       if (coords) {
-        const weatherData = await fetchWeatherByCoords(coords.latitude, coords.longitude);
+        const weatherData = await weatherService.getWeatherByCoords(coords.latitude, coords.longitude);
         await updateWeatherData(weatherData);
         return;
       }
@@ -65,7 +65,7 @@ export const useWeather = () => {
     setError(null);
 
     try {
-      const weatherData = await fetchWeatherByCity(city);
+      const weatherData = await weatherService.getWeatherByCity(city);
       await updateWeatherData(weatherData);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch weather data');

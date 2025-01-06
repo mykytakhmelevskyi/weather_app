@@ -1,64 +1,78 @@
-import axios from 'axios';
-import { config } from '../config';
+import axios, { AxiosInstance } from 'axios';
 import { WeatherData, CityGeoResponse } from '../types/weather';
+import { config } from '../config';
 
-export const fetchWeatherByCity = async (city: string): Promise<WeatherData> => {
-  try {
-    const response = await axios.get<WeatherData>(`${config.WEATHER_API.BASE_URL}/weather`, {
+class OpenWeatherMapService {
+  private weatherApi: AxiosInstance;
+  private geoApi: AxiosInstance;
+
+  constructor() {
+    // Weather API instance
+    this.weatherApi = axios.create({
+      baseURL: config.WEATHER_API.BASE_URL,
       params: {
-        q: city,
         appid: config.WEATHER_API.KEY,
         units: config.WEATHER_API.UNITS,
       },
     });
-    return response.data;
-  } catch (error) {
-    throw new Error('City not found');
-  }
-};
 
-export const fetchWeatherByCityId = async (id: number) => {
-  try {
-    const response = await axios.get(`${config.WEATHER_API.BASE_URL}/weather`, {
+    // Geo API instance
+    this.geoApi = axios.create({
+      baseURL: config.WEATHER_API.GEO_URL,
       params: {
-        id,
         appid: config.WEATHER_API.KEY,
-        units: config.WEATHER_API.UNITS,
-      },
-    });
-    return response.data;
-  } catch (error: any) {
-    throw new Error(error.message || 'City not found');
-  }
-};
-
-export const fetchWeatherByCoords = async (lat: number, lon: number) => {
-  try {
-    const response = await axios.get(`${config.WEATHER_API.BASE_URL}/weather`, {
-      params: {
-        lat,
-        lon,
-        appid: config.WEATHER_API.KEY,
-        units: config.WEATHER_API.UNITS,
-      },
-    });
-    return response.data;
-  } catch (error: any) {
-    throw new Error('Error fetching weather data');
-  }
-};
-
-export const fetchCitySuggestions = async (query: string): Promise<CityGeoResponse[]> => {
-  try {
-    const response = await axios.get(config.WEATHER_API.GEO_URL, {
-      params: {
-        q: query,
         limit: 5,
-        appid: config.WEATHER_API.KEY,
       },
     });
-    return response.data;
-  } catch (error) {
-    throw new Error('Error fetching city suggestions');
   }
-};
+
+  async getWeatherByCity(city: string): Promise<WeatherData> {
+    try {
+      const response = await this.weatherApi.get<WeatherData>('/weather', {
+        params: { q: city }
+      });
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        throw new Error('City not found');
+      }
+      throw new Error('Failed to fetch weather data');
+    }
+  }
+
+  async getWeatherByCoords(lat: number, lon: number): Promise<WeatherData> {
+    try {
+      const response = await this.weatherApi.get<WeatherData>('/weather', {
+        params: { lat, lon }
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to fetch weather data for your location');
+    }
+  }
+
+  async getCitySuggestions(query: string): Promise<CityGeoResponse[]> {
+    try {
+      const response = await this.geoApi.get<CityGeoResponse[]>('', {
+        params: { q: query }
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to fetch city suggestions');
+    }
+  }
+
+  // Helper method to format error messages
+  private formatErrorMessage(error: unknown): string {
+    if (axios.isAxiosError(error)) {
+      return error.response?.data?.message || error.message;
+    }
+    return error instanceof Error ? error.message : 'An unknown error occurred';
+  }
+}
+
+// Export singleton instance
+export const weatherService = new OpenWeatherMapService();
+
+// Export type for testing purposes
+export type { OpenWeatherMapService };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchCitySuggestions } from '../services/openWeatherMapApiService';
+import { weatherService } from '../services/openWeatherMapApiService';
 
 interface SearchBarProps {
   onSearch: (city: string) => void;
@@ -19,15 +19,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       setTimeout(async () => {
         if (value.length > 2) {
           try {
-            const citySuggestions = await fetchCitySuggestions(value);
-            setSuggestions(citySuggestions);
-          } catch (error: any) {
-            console.error(error.message);
+            const suggestions = await weatherService.getCitySuggestions(value);
+            setSuggestions(suggestions);
+          } catch (error) {
+            setSuggestions([]);
           }
         } else {
           setSuggestions([]);
         }
-      }, 500)
+      }, 300)
     );
   };
 
