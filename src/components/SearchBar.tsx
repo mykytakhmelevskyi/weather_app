@@ -43,7 +43,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         type="text"
         value={query}
         onChange={(e) => handleInputChange(e.target.value)}
-        className="w-full text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500"
+        className="w-full px-2 py-2 text-lg border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:px-1"
         placeholder="Search city..."
       />
       <ul className="absolute left-0 right-0 bg-white shadow-md mt-1 z-10">

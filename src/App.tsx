@@ -8,7 +8,7 @@ const App: React.FC = () => {
   const { currentWeather, recentCities, error, isLoading, handleSearch } = useWeather();
 
   return (
-    <div className="container bg-gray-400 mx-auto px-4 py-8 max-w-4xl min-h-[400px] rounded-sm shadow-sm">
+    <div className="container bg-blue-100 mx-auto px-4 py-8 max-w-4xl min-h-[400px] rounded-sm shadow-sm">
       <Header onSearch={handleSearch} />
       
       {error && (
