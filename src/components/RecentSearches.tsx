@@ -1,4 +1,5 @@
 import React from 'react';
+import { getWeatherIconUrl } from '../utils/weather';
 
 interface RecentSearchesProps {
   cities: { name: string; temp: number; icon: string }[];
@@ -28,7 +29,7 @@ const RecentSearches: React.FC<RecentSearchesProps> = ({ cities, onCityClick }) 
               <div className="w-16 h-16 sm:w-12 sm:h-12 flex-shrink-0">
                 <img
                   className="w-full h-full object-contain"
-                  src={`http://openweathermap.org/img/wn/${city.icon}@2x.png`}
+                  src={getWeatherIconUrl(city.icon)}
                   alt="weather icon"
                 />
               </div>

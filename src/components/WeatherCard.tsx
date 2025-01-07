@@ -1,5 +1,6 @@
 import React from 'react';
 import { WeatherData } from '../types/weather';
+import { getWeatherIconUrl } from '../utils/weather';
 
 interface WeatherCardProps {
   weather?: WeatherData;
@@ -17,7 +18,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather, isLoading }) => {
           ) : (
             <img
               className="w-full h-full object-contain"
-              src={`http://openweathermap.org/img/wn/${weather?.weather[0].icon}@4x.png`}
+              src={getWeatherIconUrl(weather?.weather[0].icon ?? 'unknown', '4x')}
               alt="Weather icon"
             />
           )}
