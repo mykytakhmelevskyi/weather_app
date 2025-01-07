@@ -23,7 +23,7 @@ export const config: Config = {
     EXPIRATION_TIME: 3600000, // 1 hour
     MAX_RECENT_CITIES: 3,
   },
-  DEFAULT_CITIES: process.env.DEFAULT_CITIES?.split(', ') || ['London', 'New York', 'Tokyo'],
+  DEFAULT_CITIES: process.env.DEFAULT_CITIES?.split(',') || ['London', 'New York', 'Tokyo'],
 };
 
 // Validation to ensure required environment variables are set

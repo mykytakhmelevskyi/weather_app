@@ -1,43 +1,58 @@
 describe('Weather App', () => {
   beforeEach(() => {
+    // Stub geolocation API to simulate denied permission
+    cy.window().then((win) => {
+      cy.stub(win.navigator.geolocation, 'getCurrentPosition')
+        .callsFake((callback, errorCallback) => {
+          errorCallback({ code: 1, message: 'Geolocation permission denied' });
+        });
+    });
+    
     // Reset localStorage before each test
     cy.clearLocalStorage();
     
     // Intercept API calls
-    cy.intercept('GET', '**/weather?q=London*', {
+    cy.intercept('GET', '**/weather?appid**q=London*', {
       fixture: 'londonWeather.json'
     }).as('getLondonWeather');
 
-    cy.intercept('GET', '**/weather?q=Paris*', {
+    cy.intercept('GET', '**/weather?appid**q=Paris*', {
       fixture: 'parisWeather.json'
     }).as('getParisWeather');
 
-    cy.intercept('GET', '**/weather?q=Tokyo*', {
+    cy.intercept('GET', '**/weather?appid**q=Tokyo*', {
       fixture: 'tokyoWeather.json'
     }).as('getTokyoWeather');
 
-    cy.intercept('GET', '**/weather?q=Berlin*', {
+    cy.intercept('GET', '**/weather?appid**q=Berlin*', {
       fixture: 'berlinWeather.json'
     }).as('getBerlinWeather');
 
-    cy.intercept('GET', '**/geo/1.0/direct?q=Lon*', {
+    cy.intercept('GET', '**/weather?appid**q=Oslo*', {
+      fixture: 'osloWeather.json'
+    }).as('getOsloWeather');
+
+    cy.intercept('GET', '**/geo/1.0/direct?appid**q=Lon*', {
       fixture: 'londonSuggestions.json'
     }).as('getLondonSuggestions');
 
-    cy.intercept('GET', '**/geo/1.0/direct?q=Par*', {
+    cy.intercept('GET', '**/geo/1.0/direct?appid**q=Par*', {
       fixture: 'parisSuggestions.json'
     }).as('getParisSuggestions');
 
-    cy.intercept('GET', '**/geo/1.0/direct?q=Tok*', {
+    cy.intercept('GET', '**/geo/1.0/direct?appid**q=Tok*', {
       fixture: 'tokyoSuggestions.json'
     }).as('getTokyoSuggestions');
 
-    cy.intercept('GET', '**/geo/1.0/direct?q=Ber*', {
+    cy.intercept('GET', '**/geo/1.0/direct?appid**q=Ber*', {
       fixture: 'berlinSuggestions.json'
     }).as('getBerlinSuggestions');
 
     // Visit the app
     cy.visit('/');
+
+    // Wait for defatult city weather(Oslo weather to load
+    cy.wait('@getOsloWeather');
   });
 
   describe('Search Functionality', () => {
